@@ -37,6 +37,7 @@ async function getAddress(cep = "", dataObj = {}){
                     </x:Envelope>`;
 
 await fetch("https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente", {
+    mode: 'no-cors', 
     method: "POST", 
     body: data
 }).then(res => {
