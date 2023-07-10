@@ -36,7 +36,7 @@ async function getAddress(cep = "", dataObj = {}){
                         </x:Body>
                     </x:Envelope>`;
 
-await fetch("http://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente", {
+await fetch("https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente", {
     headers: {
         "Content-Type": "text/xml; charset=utf-8", 
     }, 
