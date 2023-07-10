@@ -1,0 +1,72 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    background-color: gainsboro;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: sans-serif;
+}
+
+.container {
+    width: 600px;
+    background-color: rgba(128, 128, 128, 0.5);
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.form-container {
+    background-color: whitesmoke;
+    border-radius: 5px;
+}
+
+.form {
+    padding: 10px;
+}
+
+label {
+    display: flex;
+    flex-direction: column;
+}
+fieldset {
+    padding: 10px;
+    border-radius: 5px;
+}
+legend {
+    font-size: 1.3rem;
+    text-align: center;
+    font-weight: 700;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    padding: 5px;
+    border-radius: 5px;
+}
+
+*:disabled {
+    background-color: gray;
+    color: whitesmoke;
+}
+
+.label-cep {
+    width: 11ch;
+}
+
+.endereco-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+input {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    background-color: rgba(128, 128, 128, 0.2);
+    padding: 5px;
+    outline: none;
+    font-size: 1.1rem;
+}
