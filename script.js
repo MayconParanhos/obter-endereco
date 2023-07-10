@@ -5,13 +5,12 @@ const complemento = document.getElementById("complemento");
 const bairro = document.getElementById("bairro");
 const cidade = document.getElementById("cidade");
 const estado = document.getElementById("estado");
-const dataCEP = {};
-
+let dataCEP = {};
 window.addEventListener("keydown", function(){
     cep.focus();
 }, false);
 
-cep.addEventListener("input", function(e){
+cep.addEventListener("input", async function(e){
     e.preventDefault();
     let len = this.value.length;
     
@@ -21,40 +20,24 @@ cep.addEventListener("input", function(e){
     } else {
         this.value = this.value.slice(0, 9).replace(/(\d{5})(\d)/, "$1-$2");
 
-        getAddress(this.value.replace("-", ""), dataCEP);
-        console.log(dataCEP.bairro);
+        await getAddress(this.value.replace("-", ""));
     }
 }, false);
 
-async function getAddress(cep = "", dataObj = {}){
-    const data = `<x:Envelope xmlns:x="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cli="http://cliente.bean.master.sigep.bsb.correios.com.br/">
-                    <x:Header/>
-                        <x:Body>
-                            <cli:consultaCEP>
-                                <cep>${cep}</cep>
-                            </cli:consultaCEP>
-                        </x:Body>
-                    </x:Envelope>`;
-
-await fetch("https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente", {
-    mode: 'no-cors', 
-    method: "POST", 
-    body: data
+async function getAddress(cep = ""){
+    await fetch(`https://viacep.com.br/ws/${cep}/json/`, {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }, 
+        method: "GET",
+        body: null
 }).then(res => {
-    res.text().then(txt => {
-        let parser = new DOMParser();
-        let xml = parser.parseFromString(txt, "text/xml");
-
-        const dataCEP = {
-            bairro: xml.getElementsByTagName("bairro")[0].childNodes[0].nodeValue, 
-            cep: xml.getElementsByTagName("cep")[0].childNodes[0].nodeValue, 
-            cidade: xml.getElementsByTagName("cidade")[0].childNodes[0].nodeValue, 
-            complemento2: xml.getElementsByTagName("complemento2")[0].childNodes[0].nodeValue, 
-            end: xml.getElementsByTagName("end")[0].childNodes[0].nodeValue, 
-            uf: xml.getElementsByTagName("uf")[0].childNodes[0].nodeValue
-        };
-
-        dataObj = dataCEP;
-    })
+    res.json().then(json => {
+        bairro.value = json.bairro;
+        complemento.value = json.complemento;
+        cidade.value = json.localidade;
+        endereco.value = json.logradouro;
+        estado.value = json.uf;
+    });
 }).catch(e => console.log(e));
 }
