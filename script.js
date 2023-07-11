@@ -1,3 +1,9 @@
+/*
+ *  THIS WEB APPLICATION WAS DESIGNED AND CODED BY MAYCON P.
+ *  GITHUB PAGES: https://mayconparanhos.github.io/
+ *
+ */
+
 const cep = document.getElementById("cep");
 const endereco = document.getElementById("endereco");
 const numero = document.getElementById("numero");
@@ -5,16 +11,17 @@ const complemento = document.getElementById("complemento");
 const bairro = document.getElementById("bairro");
 const cidade = document.getElementById("cidade");
 const estado = document.getElementById("estado");
-let dataCEP = {};
+
 window.addEventListener("keydown", function(){
-    cep.focus();
+    if(cep.value.replace(/\D/g, "").length < 8) {
+        cep.focus();
+    }
 }, false);
 
 cep.addEventListener("input", async function(e){
     e.preventDefault();
-    let len = this.value.length;
-    
-    if(len < 9) {
+    let len = this.value.replace(/\D/g, "").length;
+    if(len < 8) {
         this.value = this.value.replace(/\D/g, "");
         this.value = this.value.replace(/(\d{5})(\d)/, "$1-$2");
     } else {
